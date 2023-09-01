@@ -37,35 +37,20 @@ public class VRUI { // Domain과 Presentation 이 섞여 Large Class가 되고 S
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
 		//duplication
-		Customer foundCustomer = null ;
-		for ( Customer customer: customers ) {
-			if ( customer.getName().equals(customerName)) {
-				foundCustomer = customer ;
-				break ;
-			}
-		}
+		Customer foundCustomer = foundCustomer(customerName);
 
 		if ( foundCustomer == null ) {
 			System.out.println("No customer found") ;
 		} else {
 			//CQRS -> 의도
 			//-Q
-			System.out.println("Name: " + foundCustomer.getName() +
-					"\tRentals: " + foundCustomer.getRentals().size()) ;
-			for ( Rental rental: foundCustomer.getRentals() ) {
-				System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ") ;
-				System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode()) ;
-			}
+			print(foundCustomer);
 			// -C
-			List<Rental> rentals = new ArrayList<Rental>() ;
-			foundCustomer.setRentals(rentals);
+			sentRental(foundCustomer);
 		}
 	}
 
-	public void returnVideo() {
-		System.out.println("Enter customer name: ") ;
-		String customerName = scanner.next() ;
-
+	public Customer foundCustomer(String customerName){
 		Customer foundCustomer = null ;
 		for ( Customer customer: customers ) {
 			if ( customer.getName().equals(customerName)) {
@@ -73,6 +58,30 @@ public class VRUI { // Domain과 Presentation 이 섞여 Large Class가 되고 S
 				break ;
 			}
 		}
+		retunr foundCustomer;
+	}
+	
+
+	public void printRental(Customer foundCustomer){
+		System.out.println("Name: " + foundCustomer.getName() +
+				"\tRentals: " + foundCustomer.getRentals().size()) ;
+		for ( Rental rental: foundCustomer.getRentals() ) {
+			System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ") ;
+			System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode()) ;
+		}
+	}
+
+	public void  sentRental(Customer foundCustomer){
+		List<Rental> rentals = new ArrayList<Rental>() ;
+		foundCustomer.setRentals(rentals);
+	}
+
+	public void returnVideo() {
+		System.out.println("Enter customer name: ") ;
+		String customerName = scanner.next() ;
+
+		Customer foundCustomer = foundCustomer(customerName);
+				
 		if ( foundCustomer == null ) return ;
 
 		System.out.println("Enter video title to return: ") ;
@@ -132,13 +141,7 @@ public class VRUI { // Domain과 Presentation 이 섞여 Large Class가 되고 S
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
 
-		Customer foundCustomer = null ;
-		for ( Customer customer: customers ) {
-			if ( customer.getName().equals(customerName)) {
-				foundCustomer = customer ;
-				break ;
-			}
-		}
+		Customer foundCustomer = foundCustomer(customerName);
 
 		if ( foundCustomer == null ) {
 			System.out.println("No customer found") ;
@@ -152,13 +155,7 @@ public class VRUI { // Domain과 Presentation 이 섞여 Large Class가 되고 S
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
 
-		Customer foundCustomer = null ;
-		for ( Customer customer: customers ) {
-			if ( customer.getName().equals(customerName)) {
-				foundCustomer = customer ;
-				break ;
-			}
-		}
+		Customer foundCustomer = foundCustomer(customerName);
 
 		if ( foundCustomer == null ) return ;
 
