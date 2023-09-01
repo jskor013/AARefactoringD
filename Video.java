@@ -44,15 +44,6 @@ public abstract class Video {
 		this.rented = rented;
 	}
 
-	public Date getRegisteredDate() {
-		return registeredDate;
-	}
-
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
-	}
-
-
 }
 
 public class VHS extends Video {
