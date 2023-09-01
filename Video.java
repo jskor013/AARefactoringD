@@ -1,36 +1,24 @@
 import java.util.Date;
 
-public class Video { // data class
-	private String title ;
+public abstract class Video {
+	private String title;
 
-	private int priceCode ;// ENUM
-	public static final int REGULAR = 1 ;
-	public static final int NEW_RELEASE =2 ;
+	private int priceCode;
+	public static final int REGULAR = 1;
+	public static final int NEW_RELEASE = 2;
 
-	private int videoType ; // subclassing
-	public static final int VHS = 1 ;
-	public static final int CD = 2 ;
-	public static final int DVD = 3 ;
 
-	private Date registeredDate ;
-	private boolean rented ;
+	private Date registeredDate;
+	private boolean rented;
 
-	public Video(String title, int videoType, int priceCode, Date registeredDate) {
-		this.setTitle(title) ;
-		this.setVideoType(videoType) ;
-		this.setPriceCode(priceCode) ;
-		this.registeredDate = registeredDate ;
+	public Video(String title, int priceCode, Date registeredDate) {
+		this.setTitle(title);
+		this.setPriceCode(priceCode);
+		this.registeredDate = registeredDate;
 	}
 
-	public int getLateReturnPointPenalty() {
-		int pentalty = 0 ;
-		switch ( videoType ) {
-			case VHS: pentalty = 1 ; break ;
-			case CD: pentalty = 2 ; break ;
-			case DVD: pentalty = 3 ; break ;
-		}
-		return pentalty ;
-	}
+	abstract public int getLateReturnPointPenalty();
+
 	public int getPriceCode() {
 		return priceCode;
 	}
@@ -57,17 +45,49 @@ public class Video { // data class
 
 	public Date getRegisteredDate() {
 		return registeredDate;
-	} // deadcode
+	}
 
 	public void setRegisteredDate(Date registeredDate) {
 		this.registeredDate = registeredDate;
-	} // deadcode
-
-	public int getVideoType() {
-		return videoType;
 	}
 
-	public void setVideoType(int videoType) {
-		this.videoType = videoType;
+
+}
+
+public class VHS extends Video {
+
+	public VHS(String title, int priceCode, Date registeredDate) {
+		super(title, priceCode, registeredDate);
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getLateReturnPointPenalty() {
+		return 1;
+	}
+}
+
+
+public class CD extends Video {
+
+	public CD(String title, int priceCode, Date registeredDate) {
+		super(title, priceCode, registeredDate);
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getLateReturnPointPenalty() {
+		return 2;
+	}
+}
+
+
+public class DVD extends Video {
+
+	public DVD(String title, int priceCode, Date registeredDate) {
+		super(title, priceCode, registeredDate);
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getLateReturnPointPenalty() {
+		return 3;
 	}
 }
