@@ -1,8 +1,8 @@
 import java.util.Date;
 
-public class Rental { // DATA Class로 운영됨
+public class Rental {
 	private Video video ;
-	private int status ; // 0 for Rented, 1 for Returned // enum 처리
+	private int status ; // 0 for Rented, 1 for Returned
 	private Date rentDate ;
 	private Date returnDate ;
 
@@ -15,10 +15,6 @@ public class Rental { // DATA Class로 운영됨
 	public Video getVideo() {
 		return video;
 	}
-
-	public void setVideo(Video video) {
-		this.video = video;
-	} // dead code
 
 	public int getStatus() {
 		return status;
@@ -34,19 +30,12 @@ public class Rental { // DATA Class로 운영됨
 		return rentDate;
 	}
 
-	public void setRentDate(Date rentDate) {
-		this.rentDate = rentDate;
-	} // dead code
-
 	public Date getReturnDate() {
 		return returnDate;
 	}
 
-	public void setReturnDate(Date returnDate) {
-		this.returnDate = returnDate;
-	} // dead code
 
-	public int getDaysRentedLimit() { // feature envy
+	public int getDaysRentedLimit() {
 		int limit = 0 ;
 		int daysRented ;
 		if (getStatus() == 1) { // returned Video
@@ -65,10 +54,34 @@ public class Rental { // DATA Class로 운영됨
 		}
 		return limit ;
 	}
-
-	public int getDaysRented(Date date, Data rentDate){
+	public int getDaysRented(Date date, Date rentDate){
 		long diff = new Date().getTime() - rentDate.getTime();
-		daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		int daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
 		return daysRented;
+	}
+	public double calEachCharge(int daysRented) {
+		double eachCharge = 0;
+		switch (video.getPriceCode()) {
+			case Video.REGULAR:
+				eachCharge += 2;
+				if (daysRented > 2)
+					eachCharge += (daysRented - 2) * 1.5;
+				break;
+			case Video.NEW_RELEASE:
+				eachCharge = daysRented * 3;
+				break;
+		}
+		return eachCharge;
+	}
+	public int calEachPoint(int daysRented) {
+		int eachPoint = 0 ;
+		eachPoint++;
+
+		if ((getVideo().getPriceCode() == Video.NEW_RELEASE) )
+			eachPoint++;
+
+		if ( daysRented > getDaysRentedLimit() )
+			eachPoint -= Math.min(eachPoint, getVideo().getLateReturnPointPenalty()) ;
+		return eachPoint;
 	}
 }
