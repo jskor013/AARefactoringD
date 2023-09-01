@@ -17,6 +17,7 @@ public abstract class Video {
 		this.registeredDate = registeredDate;
 	}
 
+	abstract public int getVideoType();
 	abstract public int getLateReturnPointPenalty();
 
 	public int getPriceCode() {
@@ -64,6 +65,11 @@ public class VHS extends Video {
 	public int getLateReturnPointPenalty() {
 		return 1;
 	}
+	
+	public int getVideoType()
+	{
+		return 1;
+	}
 }
 
 
@@ -77,6 +83,11 @@ public class CD extends Video {
 	public int getLateReturnPointPenalty() {
 		return 2;
 	}
+	
+	public int getVideoType()
+	{
+		return 1;
+	}
 }
 
 
@@ -88,6 +99,11 @@ public class DVD extends Video {
 	}
 
 	public int getLateReturnPointPenalty() {
+		return 3;
+	}
+	
+	public int getVideoType()
+	{
 		return 3;
 	}
 }
