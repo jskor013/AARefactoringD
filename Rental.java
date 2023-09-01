@@ -50,11 +50,9 @@ public class Rental { // DATA Class로 운영됨
 		int limit = 0 ;
 		int daysRented ;
 		if (getStatus() == 1) { // returned Video
-			long diff = returnDate.getTime() - rentDate.getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+			daysRented = getDiffTime(returnDate.getTime(), rentDate.getTime());	
 		} else { // not yet returned
-			long diff = new Date().getTime() - rentDate.getTime();
-			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+			daysRented = getDiffTime(Date().getTime(), rentDate.getTime());
 		}
 		if ( daysRented <= 2) return limit ;
 
@@ -64,5 +62,11 @@ public class Rental { // DATA Class로 운영됨
 			case Video.DVD: limit = 2 ; break ;
 		}
 		return limit ;
+	}
+	
+	public daysRented getDaysRented(Date dateA, Data dateB){
+		long diff = new Date().getTime() - rentDate.getTime();
+		daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		return daysRented;
 	}
 }
