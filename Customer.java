@@ -31,8 +31,6 @@ public class Customer {
 		rentals.add(rental);
 
 	}
-
-	// long method /> SRP 위배 나누어라
 	public String getReport() {
 		String result = "Customer Report for " + getName() + "\n";
 
@@ -42,36 +40,10 @@ public class Customer {
 		int totalPoint = 0;
 
 		for (Rental each : rentals) {
-			double eachCharge = 0;
-			int eachPoint = 0 ;
-			int daysRented = 0;
 
-			if (each.getStatus() == 1) { // returned Video
-				long diff = each.getReturnDate().getTime() - each.getRentDate().getTime();
-				daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-			} else { // not yet returned
-				long diff = new Date().getTime() - each.getRentDate().getTime();
-				daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
-			}
-
-			switch (each.getVideo().getPriceCode()) {
-			case Video.REGULAR:
-				eachCharge += 2;
-				if (daysRented > 2)
-					eachCharge += (daysRented - 2) * 1.5;
-				break;
-			case Video.NEW_RELEASE:
-				eachCharge = daysRented * 3;
-				break;
-			}
-
-			eachPoint++;
-
-			if ((each.getVideo().getPriceCode() == Video.NEW_RELEASE) )
-				eachPoint++;
-
-			if ( daysRented > each.getDaysRentedLimit() )
-				eachPoint -= Math.min(eachPoint, each.getVideo().getLateReturnPointPenalty()) ;
+			int daysRented= each.getDaysRented(each.getReturnDate(),each.getRentDate());
+			double eachCharge = each.calEachCharge(daysRented);
+			int eachPoint = each.calEachPoint(daysRented) ;
 
 			result += "\t" + each.getVideo().getTitle() + "\tDays rented: " + daysRented + "\tCharge: " + eachCharge
 					+ "\tPoint: " + eachPoint + "\n";
@@ -84,7 +56,6 @@ public class Customer {
 		result += "Total charge: " + totalCharge + "\tTotal Point:" + totalPoint + "\n";
 
 
-		//one 중복
 		if ( totalPoint >= 10 ) {
 			System.out.println("Congrat! You earned one free coupon");
 		}
