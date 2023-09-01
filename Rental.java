@@ -65,4 +65,10 @@ public class Rental { // DATA Class로 운영됨
 		}
 		return limit ;
 	}
+
+	public int getDaysRented(Date date, Data rentDate){
+		long diff = new Date().getTime() - rentDate.getTime();
+		daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+		return daysRented;
+	}
 }
