@@ -103,8 +103,8 @@ public class VRUI { // Domain과 Presentation 이 섞여 Large Class가 되고 S
 		customers.add(james) ;
 		customers.add(brown) ;
 
-		Video v1 = new Video("v1", Video.CD, Video.REGULAR, new Date()) ;
-		Video v2 = new Video("v2", Video.DVD, Video.NEW_RELEASE, new Date()) ;
+		Video v1 = new CD("v1", Video.REGULAR, new Date()) ;
+		Video v2 = new DVD("v2", Video.NEW_RELEASE, new Date()) ;
 		videos.add(v1) ;
 		videos.add(v2) ;
 
